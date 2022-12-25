@@ -12,6 +12,12 @@ somewhat clunky, but wanted to make it work for an answer list of any size.
 Probably should store all possible answers in the game class, which would add
 easy replayability, just stick main in a loop.
 
+12/26/22 -
+Didnt like the UI so I made it better, now has keyboard show up with text
+coloring and eliminates used letters. I also fixed bug in old version where
+the game would continue until 6 guesses regardless of whether correct guess
+was made before then.
+
 FUTURE PLANS:
 - Save history in file
 - Display statistics similarly to real Wordle

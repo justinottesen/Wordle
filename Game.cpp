@@ -9,24 +9,37 @@ Game::Game(const std::string& f_ans, const std::string& f_guess) {
   }
   populate_guesses(f_guess);
   guesses.clear();
+  display = "";
 }
 
 void Game::guess(const std::string& guess) {
-  std::string temp;
+  guesses.push_back(guess);
   std::map<char, int> g_counts(ans_counts);
   for (int i = 0; i < 5; i++) {
     if (guess[i] == answer[i]) { --g_counts[guess[i]]; }
   }
+  display += "       ";
   for (int i = 0; i < 5; i++) {
-    if (guess[i] == answer[i]) { temp += "\033[42m"; }
-    else if (g_counts[guess[i]]) {
-      temp += "\033[43m";
-      --g_counts[guess[i]];
+    if (guess[i] == answer[i]) { 
+      display += "\033[42m";
+      keyboard.set_color(guess[i], GREEN);
     }
-    temp += guess[i];
-    temp += "\033[0m";
+    else if (g_counts[guess[i]]) {
+      display += "\033[43m";
+      keyboard.set_color(guess[i], YELLOW);
+      --g_counts[guess[i]];
+    } else {
+      keyboard.set_color(guess[i], BLACK);
+    }
+    display += guess[i];
+    display += "\033[0m";
   }
-  guesses.push_back(temp);
+  display += "\n";
+}
+
+void Game::print(std::ostream& ostr) const {
+  std::cout << display << std::endl;
+  keyboard.print(ostr);
 }
 
 bool Game::get_state() const {
